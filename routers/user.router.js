@@ -7,5 +7,6 @@ router.get('/:column/:value', controller.getUserByCol);
 router.post('/', controller.addUser);
 router.post('/login', controller.login);
 router.put('/:nim', controller.updateUser);
+router.delete('/:nim', controller.deleteUser);
 
 module.exports = router

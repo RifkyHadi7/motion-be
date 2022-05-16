@@ -107,6 +107,21 @@ const user = {
         } catch (err) {
             return { status: 'err', msg: err }
         }
+    },
+    deleteUser: async ({nim}) => {
+        try {
+            await fetch(`${process.env.SUPABASE_URL}/motion_user?nim=eq.${nim}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${process.env.SUPABASE_API_KEY}`,
+                    'apikey': process.env.SUPABASE_API_KEY
+                }
+            })
+            return { status: 'ok', msg: 'success delete user' }
+        } catch (err) {
+            return { status: 'err', msg: err }
+        }
     }
 }
 

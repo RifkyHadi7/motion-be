@@ -71,6 +71,20 @@ const user = {
         .catch(err=>{
             error(res, err)
         })
+    },
+    deleteUser: async (req, res) => {
+        model.deleteUser(req.params)
+            .then(result => {
+                if (result.status == "ok") {
+                    success(res, result.msg)
+                }
+                else {
+                    error(res, result.msg)
+                }
+            })
+            .catch(err => {
+                error(res, err)
+            })
     }
 }
 
