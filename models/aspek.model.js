@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const aspek = {
     getAllAspek: async () => {
         try {
-            let res = await fetch(`${process.env.SUPABASE_URL}/motion_aspek?select=*`, {
+            let res = await fetch(`${process.env.SUPABASE_URL}/motion_aspek?select=*&order=id_aspek.asc`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ const aspek = {
     getAspekByCol: async ({column, value}) => {
         try {
             const params = ["id_aspek"].includes(column) ? `${column}=eq.${value}` : `${column}=ilike.%25${value}%25`
-            let res = await fetch(`${process.env.SUPABASE_URL}/motion_aspek?select=*&${params}`, {
+            let res = await fetch(`${process.env.SUPABASE_URL}/motion_aspek?select=*&order=id_aspek.asc&${params}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

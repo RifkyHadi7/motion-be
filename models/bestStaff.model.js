@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const bestStaff = {
     getAllBestStaff: async () => {
         try {
-            let res = await fetch(`${process.env.SUPABASE_URL}/motion_best_staff?select=id_best_staff, bulan, tahun, motion_user(nama,proker, motion_departemen(id_departemen, departemen, singkatan, id_departemen), nim)`, {
+            let res = await fetch(`${process.env.SUPABASE_URL}/motion_best_staff?select=id_best_staff, bulan, tahun, motion_user(nama,proker, foto, motion_departemen(id_departemen, departemen, singkatan, id_departemen), nim)`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ const bestStaff = {
     getBestStaffByMonthYear: async ({month, year}) => {
         try {
             const params = `bulan=eq.${month}&tahun=eq.${year}`
-            let res = await fetch(`${process.env.SUPABASE_URL}/motion_best_staff?select=id_best_staff, bulan, tahun, motion_user(nama,proker, motion_departemen(id_departemen, departemen, singkatan, id_departemen), nim)&${params}`, {
+            let res = await fetch(`${process.env.SUPABASE_URL}/motion_best_staff?select=id_best_staff, bulan, tahun, motion_user(nama,proker, foto, motion_departemen(id_departemen, departemen, singkatan, id_departemen), nim)&${params}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

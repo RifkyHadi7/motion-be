@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const jabatan = {
     getAllJabatan: async () => {
         try {
-            let res = await fetch(`${process.env.SUPABASE_URL}/motion_jabatan?select=*`, {
+            let res = await fetch(`${process.env.SUPABASE_URL}/motion_jabatan?select=*&order=id_jabatan.asc`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

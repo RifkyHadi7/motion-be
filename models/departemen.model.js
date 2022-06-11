@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const departemen = {
     getAllDepartemen: async () => {
         try {
-            let res = await fetch(`${process.env.SUPABASE_URL}/motion_departemen?select=*`, {
+            let res = await fetch(`${process.env.SUPABASE_URL}/motion_departemen?select=*&order=id_departemen.asc`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

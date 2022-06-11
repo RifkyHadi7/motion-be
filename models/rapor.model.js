@@ -3,7 +3,7 @@ const moment = require('moment');
 const rapor = {
     getAllRapor: async () => {
         try {
-            let res = await fetch(`${process.env.SUPABASE_URL}/motion_rapor?select=id_rapor, tahun, rapor_ke, hobi, kesimpulan_diri, kesimpulan_lain, motivasi, motion_user(nama,proker,motion_jabatan(jabatan, id_jabatan),motion_departemen(departemen,singkatan, id_departemen), nim), motion_kehadiran(id_kehadiran, kegiatan, tanggal, status_kehadiran, id_rapor), motion_detail_rapor(id_detail_rapor, nilai, penilaian, transparansi, motion_aspek(aspek, indikator, penjelasan_indikator, id_aspek), id_rapor)`, {
+            let res = await fetch(`${process.env.SUPABASE_URL}/motion_rapor?select=id_rapor, tahun, rapor_ke, hobi, kesimpulan_diri, kesimpulan_lain, motivasi, motion_user(nama,proker,foto,motion_jabatan(jabatan, id_jabatan),motion_departemen(departemen,singkatan, id_departemen), nim), motion_kehadiran(id_kehadiran, kegiatan, tanggal, status_kehadiran, id_rapor), motion_detail_rapor(id_detail_rapor, nilai, penilaian, transparansi, motion_aspek(aspek, indikator, penjelasan_indikator, id_aspek), id_rapor)&order=id_rapor.asc`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ const rapor = {
     getRaporByTurnNIMYear: async ({ turn, nim, year }) => {
         try {
             const params = `rapor_ke=eq.${turn}&nim=eq.${nim}&tahun=eq.${year}`
-            let res = await fetch(`${process.env.SUPABASE_URL}/motion_rapor?select=id_rapor, tahun, rapor_ke, hobi, kesimpulan_diri, kesimpulan_lain, motivasi, motion_user(nama,proker,motion_jabatan(jabatan, id_jabatan),motion_departemen(departemen,singkatan, id_departemen), nim), motion_kehadiran(id_kehadiran, kegiatan, tanggal, status_kehadiran, id_rapor), motion_detail_rapor(id_detail_rapor, nilai, penilaian, transparansi, motion_aspek(aspek, indikator, penjelasan_indikator, id_aspek), id_rapor)&${params}`, {
+            let res = await fetch(`${process.env.SUPABASE_URL}/motion_rapor?select=id_rapor, tahun, rapor_ke, hobi, kesimpulan_diri, kesimpulan_lain, motivasi, motion_user(nama,proker,foto,motion_jabatan(jabatan, id_jabatan),motion_departemen(departemen,singkatan, id_departemen), nim), motion_kehadiran(id_kehadiran, kegiatan, tanggal, status_kehadiran, id_rapor), motion_detail_rapor(id_detail_rapor, nilai, penilaian, transparansi, motion_aspek(aspek, indikator, penjelasan_indikator, id_aspek), id_rapor)&${params}&order=id_rapor.asc`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

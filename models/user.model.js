@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const user = {
     getAllUser: async () => {
         try {
-            let res = await fetch(`${process.env.SUPABASE_URL}/motion_user?select=nim,nama,proker,motion_jabatan(jabatan, id_jabatan),motion_departemen(departemen,singkatan, id_departemen)`, {
+            let res = await fetch(`${process.env.SUPABASE_URL}/motion_user?select=nim,nama,proker,motion_jabatan(jabatan, id_jabatan),motion_departemen(departemen,singkatan, id_departemen)&order=id_jabatan.asc,created_at.asc`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ const user = {
     getUserByCol: async ({ column, value }) => {
         try {
             const params = ["nim", "id_jabatan", "id_departemen"].includes(column) ? `${column}=eq.${value}` : `${column}=ilike.%25${value}%25`
-            let res = await fetch(`${process.env.SUPABASE_URL}/motion_user?select=nim,nama,proker,motion_jabatan(jabatan, id_jabatan),motion_departemen(departemen,singkatan, id_departemen)&${params}`, {
+            let res = await fetch(`${process.env.SUPABASE_URL}/motion_user?select=nim,nama,proker,motion_jabatan(jabatan, id_jabatan),motion_departemen(departemen,singkatan, id_departemen)&${params}&order=id_jabatan.asc,created_at.asc`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
