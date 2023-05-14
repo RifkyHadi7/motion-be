@@ -1,22 +1,38 @@
-const fetch = require('node-fetch');
+const supabase = require("../constants/config");
 
 const jabatan = {
-    getAllJabatan: async () => {
-        try {
-            let res = await fetch(`${process.env.SUPABASE_URL}/motion_jabatan?select=*&order=id_jabatan.asc`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.SUPABASE_API_KEY}`,
-                    'apikey': process.env.SUPABASE_API_KEY
-                }
-            })
-            let json = await res.json()
-            return { status: 'ok', data: json }
-        } catch (err) {
-            return { status: 'err', msg: err }
-        }
-    }
-}
+	getAllJabatan: async () => {
+		const { data, error } = await supabase
+			.from("motion23_jabatan")
+			.select("*")
+			.order("id_jabatan", { ascending: true });
+		if (error) {
+			return { status: "err", msg: error };
+		}
+		return { status: "ok", data };
+	},
+	getJabatanById: async (id) => {
+		const { data, error } = await supabase
+			.from("motion23_jabatan")
+			.select("*")
+			.eq("id_jabatan", id);
+		if (error) {
+			return { status: "err", msg: error };
+		}
+		return { status: "ok", data };
+	},
+	getUserByIdJabatan: async (id) => {
+		const { data, error } = await supabase
+			.from("motion23_anggotaBEM")
+			.select(
+				"nim, nama, foto, motion23_jabatan(id_jabatan, jabatan), motion23_proker(id_proker, proker), motion23_kementerian(kementerian,singkatan, id_kementerian)"
+			)
+			.eq("id_jabatan", id);
+		if (error) {
+			return { status: "err", msg: error };
+		}
+		return { status: "ok", data };
+	},
+};
 
 module.exports = jabatan;

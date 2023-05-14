@@ -1,10 +1,10 @@
-const model = require("../models/jabatan.model");
+const model = require("../models/kementerian.model");
 const { success, error } = require("../constants/result");
 
-const jabatan = {
-	getAllJabatan: async (req, res) => {
+const kementerian = {
+	getAllKementerian: async (req, res) => {
 		model
-			.getAllJabatan()
+			.getAllKementerian()
 			.then((result) => {
 				if (result.status == "ok") {
 					success(res, result.data);
@@ -16,9 +16,9 @@ const jabatan = {
 				error(res, err);
 			});
 	},
-	getJabatanById: async (req, res) => {
+	getKementerianById: async (req, res) => {
 		model
-			.getJabatanById(req.params.id)
+			.getKementerianById(req.params.id)
 			.then((result) => {
 				if (result.status == "ok") {
 					success(res, result.data);
@@ -30,9 +30,23 @@ const jabatan = {
 				error(res, err);
 			});
 	},
-	getUserByIdJabatan: async (req, res) => {
+	getKegiatanByIdKementerian: async (req, res) => {
 		model
-			.getUserByIdJabatan(req.params.id)
+			.getKegiatanByIdKementerian(req.params.id)
+			.then((result) => {
+				if (result.status == "ok") {
+					success(res, result.data);
+				} else {
+					error(res, result.msg);
+				}
+			})
+			.catch((err) => {
+				error(res, err);
+			});
+	},
+	getProkerByIdKementerian: async (req, res) => {
+		model
+			.getProkerByIdKementerian(req.params.id)
 			.then((result) => {
 				if (result.status == "ok") {
 					success(res, result.data);
@@ -46,4 +60,4 @@ const jabatan = {
 	},
 };
 
-module.exports = jabatan;
+module.exports = kementerian;
