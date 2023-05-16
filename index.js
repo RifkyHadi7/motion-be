@@ -14,6 +14,7 @@ const bestStaffRouter = require("./routers/bestStaff.router");
 const jabatanRouter = require("./routers/jabatan.router");
 const kementerianRouter = require("./routers/kementerian.router");
 const prokerRouter = require("./routers/proker.router");
+const kegiatanRouter = require("./routers/kegiatan.router");
 const userController = require("./controllers/user.controller");
 
 app.use(cors());
@@ -31,6 +32,7 @@ app.use("/proker", prokerRouter);
 app.use("/bestStaff", bestStaffRouter);
 app.use("/kementerian", kementerianRouter);
 app.use("/jabatan", jabatanRouter);
+app.use("/kegiatan", kegiatanRouter);
 app.use("/is_admin/:nim", userController.isAdmin);
 app.use("*", (req, res) => res.status(404).json({ error: "Not Found" }));
 

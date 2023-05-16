@@ -66,40 +66,41 @@ const user = {
 	},
 	addUser: async (data, file) => {
 		const { id_kementerian, nama, id_proker } = data;
-
-		// Get kementerian
-		const {
-			data: { singkatan },
-		} = await supabase
-			.from("motion23_kementerian")
-			.select("singkatan")
-			.eq("id_kementerian", id_kementerian)
-			.single();
-		const pathname = `${singkatan}/${nama}`;
-
-		//handle upload file
-		const [
-			{ error: errUpload },
-			{
-				data: { publicUrl },
-			},
-		] = await Promise.all([
-			supabase.storage
-				.from("motion23_bucket")
-				.upload(pathname, file.buffer, {
-					cacheControl: "3600",
-					contentType: file.mimetype,
-				}),
-			supabase.storage.from("motion23_bucket").getPublicUrl(pathname),
-		]);
-
-		if (errUpload) {
-			return { status: "err", msg: errUpload };
-		}
-
-		data.foto = publicUrl;
-
 		delete data.id_proker;
+		data.foto = "";
+		if (file && file.size > 0) {
+			// Get kementerian
+			const {
+				data: { singkatan },
+			} = await supabase
+				.from("motion23_kementerian")
+				.select("singkatan")
+				.eq("id_kementerian", id_kementerian)
+				.single();
+			const pathname = `${singkatan}/${nama}`;
+
+			//handle upload file
+			const [
+				{ error: errUpload },
+				{
+					data: { publicUrl },
+				},
+			] = await Promise.all([
+				supabase.storage
+					.from("motion23_bucket")
+					.upload(pathname, file.buffer, {
+						cacheControl: "3600",
+						contentType: file.mimetype,
+					}),
+				supabase.storage.from("motion23_bucket").getPublicUrl(pathname),
+			]);
+
+			if (errUpload) {
+				return { status: "err", msg: errUpload };
+			}
+
+			data.foto = publicUrl;
+		}
 
 		const { error } = await supabase
 			.from("motion23_anggotaBEM")

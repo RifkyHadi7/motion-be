@@ -1,11 +1,9 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const controller = require('../controllers/aspek.controller');
+const controller = require("../controllers/proker.controller");
 
-router.get('/', controller.getAllAspek);
-router.get('/:column/:value', controller.getAspekByCol);
-router.post('/', controller.addAspek);
-router.put('/:id', controller.updateAspek);
-router.delete('/:id', controller.deleteAspek);
+router.get("/", controller.getAllProker);
+router.get("/:id", controller.getProkerById);
+router.get("/:id/pj_bem", controller.getPJByIdProker);
 
-module.exports = router
+module.exports = router;
