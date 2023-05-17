@@ -25,7 +25,7 @@ const jabatan = {
 		const { data, error } = await supabase
 			.from("motion23_anggotaBEM")
 			.select(
-				"nim, nama, foto, motion23_jabatan(id_jabatan, jabatan), motion23_proker(id_proker, proker), motion23_kementerian(kementerian,singkatan, id_kementerian)"
+				"nim, nama, foto, jabatan:motion23_jabatan(id_jabatan, jabatan), proker:motion23_proker(id_proker, proker), kementerian:motion23_kementerian(kementerian,singkatan, id_kementerian)"
 			)
 			.eq("id_jabatan", id);
 		if (error) {

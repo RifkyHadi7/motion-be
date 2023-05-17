@@ -5,7 +5,7 @@ const kementerian = {
 		const { data, error } = await supabase
 			.from("motion23_kementerian")
 			.select(
-				"id_kementerian, kementerian, singkatan, motion23_proker(id_proker, proker)"
+				"id_kementerian, kementerian, singkatan, proker:motion23_proker(id_proker, proker)"
 			)
 			.order("id_kementerian", { ascending: true });
 		if (error) {
@@ -17,7 +17,7 @@ const kementerian = {
 		const { data, error } = await supabase
 			.from("motion23_kementerian")
 			.select(
-				"id_kementerian, kementerian, singkatan, motion23_proker(id_proker, proker)"
+				"id_kementerian, kementerian, singkatan, proker:motion23_proker(id_proker, proker)"
 			)
 			.eq("id_kementerian", id);
 		if (error) {

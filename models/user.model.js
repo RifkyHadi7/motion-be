@@ -6,7 +6,7 @@ const user = {
 		const { data, error } = await supabase
 			.from("motion23_anggotaBEM")
 			.select(
-				"nim, nama, foto, motion23_proker(id_proker, proker), motion23_jabatan(id_jabatan, jabatan),motion23_kementerian(kementerian,singkatan, id_kementerian)"
+				"nim, nama, foto, proker:motion23_proker(id_proker, proker), jabatan:motion23_jabatan(id_jabatan, jabatan), kementerian:motion23_kementerian(kementerian,singkatan, id_kementerian)"
 			)
 			.order("id_jabatan", { ascending: true })
 			.order("id_kementerian", { ascending: true });
