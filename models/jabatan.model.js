@@ -33,6 +33,17 @@ const jabatan = {
 		}
 		return { status: "ok", data };
 	},
+	getAspekByIdJabatan: async (id) => {
+		const { data, error } = await supabase
+			.from("motion23_aspekPenilaian")
+			.select("*, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi)")
+			.eq("id_jabatan", id)
+			.order("id_aspek", { ascending: true });
+		if (error) {
+			return { status: "err", msg: error };
+		}
+		return { status: "ok", data };
+	},
 };
 
 module.exports = jabatan;

@@ -1,86 +1,78 @@
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
+const supabase = require("../constants/config");
 
 const aspek = {
-    getAllAspek: async () => {
-        try {
-            let res = await fetch(`${process.env.SUPABASE_URL}/motion_aspek?select=*&order=id_aspek.asc`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.SUPABASE_API_KEY}`,
-                    'apikey': process.env.SUPABASE_API_KEY
-                }
-            })
-            let json = await res.json()
-            return { status: 'ok', data: json }
-        } catch (err) {
-            return { status: 'err', msg: err }
-        }
-    },
-    getAspekByCol: async ({column, value}) => {
-        try {
-            const params = ["id_aspek"].includes(column) ? `${column}=eq.${value}` : `${column}=ilike.%25${value}%25`
-            let res = await fetch(`${process.env.SUPABASE_URL}/motion_aspek?select=*&order=id_aspek.asc&${params}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.SUPABASE_API_KEY}`,
-                    'apikey': process.env.SUPABASE_API_KEY
-                }
-            })
-            let json = await res.json()
-            return { status: 'ok', data: json }
-        } catch (err) {
-            return { status: 'err', msg: err }
-        }
-    },
-    addAspek: async (data) => {
-        try {
-            await fetch(`${process.env.SUPABASE_URL}/motion_aspek`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.SUPABASE_API_KEY}`,
-                    'apikey': process.env.SUPABASE_API_KEY
-                },
-                body: JSON.stringify(data)
-            })
-            return { status: 'ok', msg: 'success add aspek' }
-        } catch (err) {
-            return { status: 'err', msg: err }
-        }
-    },
-    updateAspek: async (data, {id_aspek}) => {
-        try {
-            await fetch(`${process.env.SUPABASE_URL}/motion_aspek?id_aspek=eq.${id_aspek}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.SUPABASE_API_KEY}`,
-                    'apikey': process.env.SUPABASE_API_KEY
-                },
-                body: JSON.stringify(data)
-            })
-            return { status: 'ok', msg: 'success update aspek' }
-        } catch (err) {
-            return { status: 'err', msg: err }
-        }
-    },
-    deleteAspek: async ({id_aspek}) => {
-        try {
-            await fetch(`${process.env.SUPABASE_URL}/motion_aspek?id_aspek=eq.${id_aspek}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.SUPABASE_API_KEY}`,
-                    'apikey': process.env.SUPABASE_API_KEY
-                }
-            })
-            return { status: 'ok', msg: 'success delete aspek' }
-        } catch (err) {
-            return { status: 'err', msg: err }
-        }
-    }
-}
+	getAllAspek: async () => {
+		const { data, error } = await supabase
+			.from("motion23_aspekPenilaian")
+			.select("*, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi)")
+			.order("id_aspek", { ascending: true });
+		if (error) {
+			return { status: "err", msg: error };
+		}
+		return { status: "ok", data };
+	},
+	getAspekById: async (id) => {
+		const { data, error } = await supabase
+			.from("motion23_aspekPenilaian")
+			.select("*, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi)")
+			.eq("id_aspek", id)
+			.order("id_aspek", { ascending: true });
+		if (error) {
+			return { status: "err", msg: error };
+		}
+		return { status: "ok", data };
+	},
+
+	getAspekByCol: async ({ column, value }) => {
+		try {
+			const params = ["id_aspek"].includes(column)
+				? `${column}=eq.${value}`
+				: `${column}=ilike.%25${value}%25`;
+			let res = await fetch(
+				`${process.env.SUPABASE_URL}/motion_aspek?select=*&order=id_aspek.asc&${params}`,
+				{
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${process.env.SUPABASE_API_KEY}`,
+						apikey: process.env.SUPABASE_API_KEY,
+					},
+				}
+			);
+			let json = await res.json();
+			return { status: "ok", data: json };
+		} catch (err) {
+			return { status: "err", msg: err };
+		}
+	},
+	addAspek: async (data) => {
+		const { error } = await supabase.from("motion23_aspek").insert(data);
+		if (error) {
+			return { status: "err", msg: error };
+		}
+		return { status: "ok", msg: "success add aspek" };
+	},
+	updateAspek: async (data, { id_aspek }) => {
+		const { error } = await supabase
+			.from("motion23_aspek")
+			.update(data)
+			.eq("id_aspek", id_aspek);
+		if (error) {
+			return { status: "err", msg: error };
+		}
+		return { status: "ok", msg: "success update aspek" };
+	},
+	deleteAspek: async ({ id_aspek }) => {
+		const { error } = await supabase
+			.from("motion23_aspek")
+			.delete()
+			.eq("id_aspek", id_aspek);
+		if (error) {
+			return { status: "err", msg: error };
+		}
+		return { status: "ok", msg: "success delete aspek" };
+	},
+};
 
 module.exports = aspek;
