@@ -53,21 +53,21 @@ const aspek = {
 		}
 		return { status: "ok", msg: "success add aspek" };
 	},
-	updateAspek: async (data, { id_aspek }) => {
+	updateAspek: async (data, { id }) => {
 		const { error } = await supabase
 			.from("motion23_aspek")
 			.update(data)
-			.eq("id_aspek", id_aspek);
+			.eq("id_aspek", id);
 		if (error) {
 			return { status: "err", msg: error };
 		}
 		return { status: "ok", msg: "success update aspek" };
 	},
-	deleteAspek: async ({ id_aspek }) => {
+	deleteAspek: async ({ id }) => {
 		const { error } = await supabase
 			.from("motion23_aspek")
 			.delete()
-			.eq("id_aspek", id_aspek);
+			.eq("id_aspek", id);
 		if (error) {
 			return { status: "err", msg: error };
 		}
