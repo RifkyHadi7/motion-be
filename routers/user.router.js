@@ -5,6 +5,10 @@ const multer = require("multer");
 const upload = multer();
 
 router.get("/", controller.getAllUser);
+router.get("/:nim", controller.getUserByNim);
+router.get("/:nim/rapor", controller.getRaporByNim);
+router.get("/:nim/rapor/:turn", controller.getRaporByTurnNim);
+router.get("/:nim/absensi/:turn", controller.getAbsensiByTurnNim);
 router.post("/", upload.single("foto"), controller.addUser);
 router.post("/login", controller.login);
 router.put("/:nim", controller.updateUser);
