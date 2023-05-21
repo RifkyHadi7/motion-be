@@ -17,6 +17,64 @@ const user = {
 				error(res, err);
 			});
 	},
+	getUserByNim: async (req, res) => {
+		model
+			.getUserByNim(req.params.nim)
+			.then((result) => {
+				if (result.status == "ok") {
+					success(res, result.data);
+				} else {
+					error(res, result.msg);
+				}
+			})
+			.catch((err) => {
+				error(res, err);
+			});
+	},
+	getRaporByNim: async (req, res) => {
+		model
+			.getRaporByNim(req.params.nim)
+			.then((result) => {
+				if (result.status == "ok") {
+					success(res, result.data);
+				} else {
+					error(res, result.msg);
+				}
+			})
+			.catch((err) => {
+				error(res, err);
+			});
+	},
+
+	getRaporByTurnNim: async (req, res) => {
+		model
+			.getRaporByTurnNim(req.params)
+			.then((result) => {
+				if (result.status == "ok") {
+					success(res, result.data);
+				} else {
+					error(res, result.msg);
+				}
+			})
+			.catch((err) => {
+				error(res, err);
+			});
+	},
+	getAbsensiByTurnNim: async (req, res) => {
+		model
+			.getAbsensiByTurnNim(req.params)
+			.then((result) => {
+				if (result.status == "ok") {
+					success(res, result.data);
+				} else {
+					error(res, result.msg);
+				}
+			})
+			.catch((err) => {
+				error(res, err);
+			});
+	},
+
 	login: async (req, res) => {
 		model
 			.login(req.body)
