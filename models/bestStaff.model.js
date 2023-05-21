@@ -2,96 +2,60 @@ const supabase = require("../constants/config");
 
 const bestStaff = {
 	getAllBestStaff: async () => {
-		try {
-			let res = await fetch(
-				`${process.env.SUPABASE_URL}/motion_best_staff?select=id_best_staff, bulan, tahun, motion_user(nama,proker, foto, motion_departemen(id_departemen, departemen, singkatan, id_departemen), nim)`,
-				{
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${process.env.SUPABASE_API_KEY}`,
-						apikey: process.env.SUPABASE_API_KEY,
-					},
-				}
-			);
-			let json = await res.json();
-			return { status: "ok", data: json };
-		} catch (err) {
-			return { status: "err", msg: err };
+		const { data, error } = await supabase
+			.from("motion23_bestStaff")
+			.select(
+				"month, staff:motion23_anggotaBEM(nim, nama, foto, kementerian:motion23_kementerian(*))"
+			)
+			.order("month", { ascending: true })
+			.order("id_kementerian", { ascending: true });
+		if (error) {
+			return { status: "err", msg: error };
 		}
+		return { status: "ok", data: data };
 	},
-	getBestStaffByMonthYear: async ({ month, year }) => {
-		try {
-			const params = `bulan=eq.${month}&tahun=eq.${year}`;
-			let res = await fetch(
-				`${process.env.SUPABASE_URL}/motion_best_staff?select=id_best_staff, bulan, tahun, motion_user(nama,proker, foto, motion_departemen(id_departemen, departemen, singkatan, id_departemen), nim)&${params}`,
-				{
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${process.env.SUPABASE_API_KEY}`,
-						apikey: process.env.SUPABASE_API_KEY,
-					},
-				}
-			);
-			let json = await res.json();
-			return { status: "ok", data: json };
-		} catch (err) {
-			return { status: "err", msg: err };
+	getBestStaffByMonth: async ({ month }) => {
+		const { data, error } = await supabase
+			.from("motion23_bestStaff")
+			.select(
+				"month, staff:motion23_anggotaBEM(nim, nama, foto, kementerian:motion23_kementerian(*))"
+			)
+			.eq("month", month)
+			.order("id_kementerian", { ascending: true });
+		if (error) {
+			return { status: "err", msg: error };
 		}
+		return { status: "ok", data: data };
 	},
+
 	addBestStaff: async (data) => {
-		try {
-			await fetch(`${process.env.SUPABASE_URL}/motion_best_staff`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${process.env.SUPABASE_API_KEY}`,
-					apikey: process.env.SUPABASE_API_KEY,
-				},
-				body: JSON.stringify(data),
-			});
-			return { status: "ok", msg: "success add best staff" };
-		} catch (err) {
-			return { status: "err", msg: err };
+		const { error } = await supabase
+			.from("motion23_bestStaff")
+			.insert(data);
+		if (error) {
+			return { status: "err", msg: error };
 		}
+		return { status: "ok", msg: "success add best staff" };
 	},
-	updateBestStaff: async (data, { id_best_staff }) => {
-		try {
-			await fetch(
-				`${process.env.SUPABASE_URL}/motion_best_staff?id_best_staff=eq.${id_best_staff}`,
-				{
-					method: "PATCH",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${process.env.SUPABASE_API_KEY}`,
-						apikey: process.env.SUPABASE_API_KEY,
-					},
-					body: JSON.stringify(data),
-				}
-			);
-			return { status: "ok", msg: "success update best staff" };
-		} catch (err) {
-			return { status: "err", msg: err };
+	updateBestStaff: async (data, { id }) => {
+		const { error } = await supabase
+			.from("motion23_bestStaff")
+			.update(data)
+			.eq("id", id);
+		if (error) {
+			return { status: "err", msg: error };
 		}
+		return { status: "ok", msg: "success update best staff" };
 	},
-	deleteBestStaff: async ({ id_best_staff }) => {
-		try {
-			await fetch(
-				`${process.env.SUPABASE_URL}/motion_best_staff?id_best_staff=eq.${id_best_staff}`,
-				{
-					method: "DELETE",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${process.env.SUPABASE_API_KEY}`,
-						apikey: process.env.SUPABASE_API_KEY,
-					},
-				}
-			);
-			return { status: "ok", msg: "success delete best staff" };
-		} catch (err) {
-			return { status: "err", msg: err };
+	deleteBestStaff: async ({ id }) => {
+		const { error } = await supabase
+			.from("motion23_bestStaff")
+			.delete()
+			.eq("id", id);
+		if (error) {
+			return { status: "err", msg: error };
 		}
+		return { status: "ok", msg: "success delete best staff" };
 	},
 };
 
