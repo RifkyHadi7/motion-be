@@ -132,7 +132,7 @@ const user = {
 			const { data, err } = await supabase
 				.from("motion23_anggotaBEM")
 				.select(
-					"nim,nama,motion23_proker(id_proker, proker), motion23_jabatan(jabatan, id_jabatan),motion23_kementerian(kementerian,singkatan, id_kementerian)"
+					"nim,nama, proker:motion23_proker(id_proker, proker), jabatan:motion23_jabatan(jabatan, id_jabatan), kementerian:motion23_kementerian(kementerian,singkatan, id_kementerian)"
 				)
 				.eq("nim", nim)
 				.single();
