@@ -88,9 +88,7 @@ const user = {
 		if (error) {
 			return { status: "err", msg: error };
 		}
-		const dataAbsensi = data.absensi.filter(
-			(item) => item.kegiatan !== null
-		);
+		const dataAbsensi = data.absensi.filter((item) => item.kegiatan !== null);
 		const totalKehadiran = dataAbsensi.filter(
 			(item) => item.status === true
 		).length;
@@ -109,19 +107,16 @@ const user = {
 	},
 	login: async ({ nim, password }) => {
 		try {
-			const login = await fetch(
-				`https://bemfilkom-rest.vercel.app/auth`,
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						nim,
-						password,
-					}),
-				}
-			)
+			const login = await fetch(`https://bemfilkom-rest.vercel.app/auth`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					nim,
+					password,
+				}),
+			})
 				.then((res) => res.json())
 				.catch((err) => {
 					throw err;
@@ -178,12 +173,10 @@ const user = {
 					data: { publicUrl },
 				},
 			] = await Promise.all([
-				supabase.storage
-					.from("motion23_bucket")
-					.upload(pathname, file.buffer, {
-						cacheControl: "3600",
-						contentType: file.mimetype,
-					}),
+				supabase.storage.from("motion23_bucket").upload(pathname, file.buffer, {
+					cacheControl: "3600",
+					contentType: file.mimetype,
+				}),
 				supabase.storage.from("motion23_bucket").getPublicUrl(pathname),
 			]);
 
@@ -194,9 +187,7 @@ const user = {
 			data.foto = publicUrl;
 		}
 
-		const { error } = await supabase
-			.from("motion23_anggotaBEM")
-			.insert(data);
+		const { error } = await supabase.from("motion23_anggotaBEM").insert(data);
 		if (error) {
 			return { status: "err", msg: error };
 		}
@@ -222,6 +213,7 @@ const user = {
 	updateUser: async (data, { nim }) => {
 		const { id_proker } = data;
 		delete data.id_proker;
+		console.log(nim);
 		const { error } = await supabase
 			.from("motion23_anggotaBEM")
 			.update(data)
@@ -230,12 +222,30 @@ const user = {
 			return { status: "err", msg: error };
 		}
 		if (id_proker) {
-			const { error } = await supabase.from("motion23_pjProker").update(
-				id_proker.map((id) => ({
-					nim,
-					id_proker: id,
-				}))
-			);
+			const { data } = await supabase
+				.from("motion23_pjProker")
+				.select("*")
+				.eq("nim", nim);
+			console.log(data);
+			if (data.length > 0) {
+				const { error } = await supabase
+					.from("motion23_pjProker")
+					.delete()
+					.eq("nim", nim);
+				if (error) {
+					return { status: "err", msg: error };
+				}
+			}
+
+			const { error } = await supabase
+				.from("motion23_pjProker")
+				.upsert(
+					id_proker.map((id) => ({
+						nim,
+						id_proker: id,
+					}))
+				)
+				.eq("nim", nim);
 			if (error) {
 				return { status: "err", msg: error };
 			}
