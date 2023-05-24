@@ -31,6 +31,21 @@ const user = {
 				error(res, err);
 			});
 	},
+	getUserByKementerianJabatan: async (req, res) => {
+		model
+			.getUserByKementerianJabatan(req.params)
+			.then((result) => {
+				if (result.status == "ok") {
+					success(res, result.data);
+				} else {
+					error(res, result.msg);
+				}
+			})
+			.catch((err) => {
+				error(res, err);
+			});
+	},
+
 	getRaporByNim: async (req, res) => {
 		model
 			.getRaporByNim(req.params.nim)

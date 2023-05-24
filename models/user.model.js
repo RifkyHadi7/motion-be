@@ -28,6 +28,22 @@ const user = {
 		}
 		return { status: "ok", data };
 	},
+	getUserByKementerianJabatan: async ({ id_kementerian, id_jabatan }) => {
+		const { data, error } = await supabase
+			.from("motion23_anggotaBEM")
+			.select(
+				"nim, nama, foto, proker:motion23_proker(id_proker, proker), jabatan:motion23_jabatan(id_jabatan, jabatan), kementerian:motion23_kementerian(kementerian,singkatan, id_kementerian)"
+			)
+			.eq("id_kementerian", id_kementerian)
+			.eq("id_jabatan", id_jabatan)
+			.order("id_kementerian", { ascending: true })
+			.order("id_jabatan", { ascending: true });
+		if (error) {
+			return { status: "err", msg: error };
+		}
+		return { status: "ok", data };
+	},
+
 	getRaporByNim: async (nim) => {
 		const { data, error } = await supabase
 			.from("motion23_rapor")

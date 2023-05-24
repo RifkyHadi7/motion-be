@@ -6,6 +6,10 @@ const upload = multer();
 
 router.get("/", controller.getAllUser);
 router.get("/:nim", controller.getUserByNim);
+router.get(
+	"/kementerian/:id_kementerian/jabatan/:id_jabatan",
+	controller.getUserByKementerianJabatan
+);
 router.get("/:nim/rapor", controller.getRaporByNim);
 router.get("/:nim/rapor/:turn", controller.getRaporByTurnNim);
 router.get("/:nim/absensi/:turn", controller.getAbsensiByTurnNim);
