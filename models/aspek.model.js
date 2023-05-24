@@ -5,7 +5,9 @@ const aspek = {
 	getAllAspek: async () => {
 		const { data, error } = await supabase
 			.from("motion23_aspekPenilaian")
-			.select("*, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi)")
+			.select(
+				"*, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi), jabatan:motion23_jabatan(jabatan)"
+			)
 			.order("id_aspek", { ascending: true });
 		if (error) {
 			return { status: "err", msg: error };
@@ -15,7 +17,9 @@ const aspek = {
 	getAspekById: async (id) => {
 		const { data, error } = await supabase
 			.from("motion23_aspekPenilaian")
-			.select("*, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi)")
+			.select(
+				"*, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi), jabatan:motion23_jabatan(jabatan)"
+			)
 			.eq("id_aspek", id)
 			.order("id_aspek", { ascending: true });
 		if (error) {
