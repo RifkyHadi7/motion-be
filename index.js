@@ -34,7 +34,7 @@ app.use("/kementerian", kementerianRouter);
 app.use("/jabatan", jabatanRouter);
 app.use("/kegiatan", kegiatanRouter);
 app.use("/is_admin/:nim", userController.isAdmin);
-app.use("*", (req, res) => res.status(404).json({ error: "Not Found" }));
+app.use("*", (_req, res) => res.status(404).json({ error: "Not Found" }));
 
 //server
 app.listen(port, () => console.log(`Listening on port ${port}`));
