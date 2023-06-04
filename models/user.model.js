@@ -242,7 +242,6 @@ const user = {
 				.from("motion23_pjProker")
 				.select("*")
 				.eq("nim", nim);
-			console.log(data);
 			if (data.length > 0) {
 				const { error } = await supabase
 					.from("motion23_pjProker")
