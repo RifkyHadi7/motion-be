@@ -4,7 +4,7 @@ const rapor = {
 		const { data, error } = await supabase
 			.from("motion23_rapor")
 			.select(
-				"*, user:motion23_anggotaBEM(nama, id_jabatan, id_kementerian, proker:motion23_proker(id_proker, proker), kementerian:motion23_kementerian(singkatan) jabatan:motion23_jabatan(jabatan)), detail:motion23_transparansi(catatan_transparansi, aspek:motion23_aspekPenilaian(aspek,indikator, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi)))"
+				"*, user:motion23_anggotaBEM(nama, id_jabatan, id_kementerian, proker:motion23_proker(id_proker, proker), kementerian:motion23_kementerian(singkatan), jabatan:motion23_jabatan(jabatan)), detail:motion23_transparansi(catatan_transparansi, aspek:motion23_aspekPenilaian(aspek,indikator, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi)))"
 			)
 			.order("id_jabatan", {
 				foreignTable: "motion23_anggotaBEM",
