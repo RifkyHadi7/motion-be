@@ -217,7 +217,7 @@ const user = {
 			const { error } = await supabase.from("motion23_pjProker").insert(
 				prokerData.map((id) => ({
 					nim: data.nim,
-					id_proker: id,
+					id_proker: Number(id),
 				}))
 			);
 			if (error) {
