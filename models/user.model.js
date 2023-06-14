@@ -208,16 +208,11 @@ const user = {
 			return { status: "err", msg: error };
 		}
 		if (id_proker) {
-			let prokerData = [];
-			if (typeof id_proker === "string") {
-				prokerData = [id_proker];
-			} else {
-				prokerData = id_proker;
-			}
+			prokerData = id_proker.split(",").map(Number);
 			const { error } = await supabase.from("motion23_pjProker").insert(
 				prokerData.map((id) => ({
 					nim: data.nim,
-					id_proker: Number(id),
+					id_proker: id,
 				}))
 			);
 			if (error) {
@@ -268,6 +263,20 @@ const user = {
 		return { status: "ok", msg: "success update user" };
 	},
 	deleteUser: async ({ nim }) => {
+		//delete storage
+		const { data } = await supabase
+			.from("motion23_anggotaBEM")
+			.select("kementerian:motion23_kementerian(singkatan), nama, foto")
+			.eq("nim", nim)
+			.single();
+		if (data.foto) {
+			const { error } = await supabase.storage
+				.from("motion23_bucket")
+				.remove([`${data.kementerian.singkatan}/${data.nama}`]);
+			if (error) {
+				return { status: "err", msg: error };
+			}
+		}
 		const { error } = await supabase
 			.from("motion23_anggotaBEM")
 			.delete()
