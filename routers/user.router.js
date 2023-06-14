@@ -2,7 +2,11 @@ const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/user.controller");
 const multer = require("multer");
-const upload = multer();
+const upload = multer({
+    limits: {
+        fileSize: 1024 * 1024 * 5,
+    },
+});
 
 router.get("/", controller.getAllUser);
 router.get("/:nim", controller.getUserByNim);
