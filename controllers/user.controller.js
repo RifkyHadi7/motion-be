@@ -19,7 +19,7 @@ const user = {
 	},
 	getUserByNim: async (req, res) => {
 		model
-			.getUserByNim(req.params.nim)
+			.getUserByNIM(req.params.nim)
 			.then((result) => {
 				if (result.status == "ok") {
 					success(res, result.data);
