@@ -48,7 +48,7 @@ const user = {
 		const { data, error } = await supabase
 			.from("motion23_rapor")
 			.select(
-				"*, user:motion23_anggotaBEM(nama, foto, proker:motion23_proker(id_proker, proker), jabatan:motion23_jabatan(id_jabatan, jabatan), kementerian:motion23_kementerian(kementerian,singkatan, id_kementerian)) , detail:motion23_transparansi(catatan_transparansi, aspek:motion23_aspekPenilaian(aspek,indikator, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi)))"
+				"*, user:motion23_anggotaBEM(nama, foto, proker:motion23_proker(id_proker, proker), jabatan:motion23_jabatan(id_jabatan, jabatan), kementerian:motion23_kementerian(kementerian,singkatan, id_kementerian)) , detail:motion23_transparansi(catatan_transparansi,id_aspek, aspek:motion23_aspekPenilaian(aspek,indikator, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi)))"
 			)
 			.eq("nim", nim)
 			.order("id_rapor", { ascending: true });
@@ -61,7 +61,7 @@ const user = {
 		const { data, error } = await supabase
 			.from("motion23_rapor")
 			.select(
-				"*, user:motion23_anggotaBEM(nama, foto, proker:motion23_proker(id_proker, proker), jabatan:motion23_jabatan(id_jabatan, jabatan), kementerian:motion23_kementerian(kementerian,singkatan, id_kementerian)) , detail:motion23_transparansi(catatan_transparansi, aspek:motion23_aspekPenilaian(aspek,indikator, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi)))"
+				"*, user:motion23_anggotaBEM(nama, foto, proker:motion23_proker(id_proker, proker), jabatan:motion23_jabatan(id_jabatan, jabatan), kementerian:motion23_kementerian(kementerian,singkatan, id_kementerian)) , detail:motion23_transparansi(catatan_transparansi,id_aspek, aspek:motion23_aspekPenilaian(aspek,indikator, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi)))"
 			)
 			.eq("nim", nim)
 			.eq("rapor_ke", turn)
@@ -77,16 +77,16 @@ const user = {
 		let tanggal = null;
 		switch (Number(turn)) {
 			case 1:
-				tanggal = { start: "2023-01-01", end: "2023-06-30" };
+				tanggal = { end: "2023-06-30" };
 				break;
 			case 2:
-				tanggal = { start: "2023-07-01", end: "2023-08-31" };
+				tanggal = { end: "2023-08-31" };
 				break;
 			case 3:
-				tanggal = { start: "2023-09-01", end: "2023-12-31" };
+				tanggal = { end: "2023-12-31" };
 				break;
 			default:
-				tanggal = { start: "2023-01-01", end: "2023-12-31" };
+				tanggal = { end: "2023-12-31" };
 		}
 		const { data, error } = await supabase
 			.from("motion23_anggotaBEM")
@@ -94,7 +94,6 @@ const user = {
 				"absensi:motion23_absensi(id_kegiatan,status, kegiatan:motion23_kegiatan(kegiatan, tanggal, created_at))"
 			)
 			.eq("nim", nim)
-			.gte("absensi.kegiatan.created_at", tanggal.start)
 			.lte("absensi.kegiatan.created_at", tanggal.end)
 			.order("id_kegiatan", {
 				foreignTable: "motion23_absensi",
