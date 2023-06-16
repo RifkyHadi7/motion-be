@@ -117,7 +117,7 @@ const rapor = {
 			const { error: errDeleteTransparansi } = await supabase
 				.from("motion23_transparansi")
 				.delete()
-				.eq("id_rapor", data.id_rapor);
+				.eq("id_rapor", id);
 			if (errDeleteTransparansi) {
 				console.log("errDeleteTransparansi", errDeleteTransparansi);
 				return { status: "err", msg: errDeleteTransparansi };
