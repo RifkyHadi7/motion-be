@@ -87,20 +87,10 @@ const rapor = {
 			return { status: "err", msg: errRapor };
 		}
 		if (kehadiran) {
-			//get data and delete it
-			const { data: dataAbsensi, error: errAbsensi } = await supabase
-				.from("motion23_absensi")
-				.select("nim")
-				.eq("nim", data.nim)
-				.single();
-			if (errAbsensi) {
-				console.log("errAbsensi", errAbsensi);
-				return { status: "err", msg: errAbsensi };
-			}
 			const { error: errDeleteKehadiran } = await supabase
 				.from("motion23_absensi")
 				.delete()
-				.eq("nim", dataAbsensi.nim);
+				.eq("nim", data.nim);
 			if (errDeleteKehadiran) {
 				console.log("errDeleteKehadiran", errDeleteKehadiran);
 				return { status: "err", msg: errDeleteKehadiran };
@@ -124,20 +114,10 @@ const rapor = {
 			}
 		}
 		if (detail_rapor) {
-			//get data and delete it
-			const { data: dataTransparansi, error: errTransparansi } = await supabase
-				.from("motion23_transparansi")
-				.select("id_rapor")
-				.eq("id_rapor", id)
-				.single();
-			if (errTransparansi) {
-				console.log("errTransparansi", errTransparansi);
-				return { status: "err", msg: errTransparansi };
-			}
 			const { error: errDeleteTransparansi } = await supabase
 				.from("motion23_transparansi")
 				.delete()
-				.eq("id_rapor", dataTransparansi.id_rapor);
+				.eq("id_rapor", data.id_rapor);
 			if (errDeleteTransparansi) {
 				console.log("errDeleteTransparansi", errDeleteTransparansi);
 				return { status: "err", msg: errDeleteTransparansi };
