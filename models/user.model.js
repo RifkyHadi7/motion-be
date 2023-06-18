@@ -108,7 +108,7 @@ const user = {
 			(item) => item.status === true
 		).length;
 		const totalKegiatan = dataAbsensi.length;
-		const persentaseKehadiran = (totalKehadiran / totalKegiatan) * 100;
+		const persentaseKehadiran = ((totalKehadiran / totalKegiatan) * 100).toFixed(2);
 		return {
 			status: "ok",
 			data: {
