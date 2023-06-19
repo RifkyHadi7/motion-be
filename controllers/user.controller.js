@@ -153,14 +153,14 @@ const user = {
 				if (result.status == "ok") {
 					success(res, result.data);
 				} else {
-					return res.statusCode(500).json({
+					return res.statusCode(403).json({
 						status: "error",
 						data: result.data,
 					});
 				}
 			})
 			.catch((err) => {
-				return res.statusCode(500).json({
+				return res.statusCode(403).json({
 					status: "error",
 					data: result.data,
 				});
