@@ -154,14 +154,16 @@ const user = {
 					success(res, result.data);
 				} else {
 					return res.statusCode(500).json({
-                        status: "error",
-                        data: result.data
-                    })
-
+						status: "error",
+						data: result.data,
+					});
 				}
 			})
 			.catch((err) => {
-				error(res, err);
+				return res.statusCode(500).json({
+					status: "error",
+					data: result.data,
+				});
 			});
 	},
 };
