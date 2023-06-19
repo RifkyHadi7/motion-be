@@ -9,7 +9,8 @@ const user = {
 				"nim, nama, foto, proker:motion23_proker(id_proker, proker), jabatan:motion23_jabatan(id_jabatan, jabatan), kementerian:motion23_kementerian(kementerian,singkatan, id_kementerian)"
 			)
 			.order("id_jabatan", { ascending: true })
-			.order("id_kementerian", { ascending: true });
+			.order("id_kementerian", { ascending: true })
+			.order("nim", { ascending: true });
 		if (error) {
 			return { status: "err", msg: error };
 		}
@@ -77,16 +78,28 @@ const user = {
 		let tanggal = null;
 		switch (Number(turn)) {
 			case 1:
-				tanggal = { end: "2023-06-30" };
+				tanggal = {
+					start: "2023-01-01",
+					end: "2023-06-30",
+				};
 				break;
 			case 2:
-				tanggal = { end: "2023-08-31" };
+				tanggal = {
+					start: "2023-07-01",
+					end: "2023-08-31",
+				};
 				break;
 			case 3:
-				tanggal = { end: "2023-12-31" };
+				tanggal = {
+					start: "2023-09-01",
+					end: "2023-12-31",
+				};
 				break;
 			default:
-				tanggal = { end: "2023-12-31" };
+				tanggal = {
+					start: "2023-01-01",
+					end: "2023-12-31",
+				};
 		}
 		const { data, error } = await supabase
 			.from("motion23_anggotaBEM")
@@ -94,6 +107,7 @@ const user = {
 				"absensi:motion23_absensi(id_kegiatan,status, kegiatan:motion23_kegiatan(kegiatan, tanggal, created_at))"
 			)
 			.eq("nim", nim)
+			.gte("absensi.kegiatan.created_at", tanggal.start)
 			.lte("absensi.kegiatan.created_at", tanggal.end)
 			.order("id_kegiatan", {
 				foreignTable: "motion23_absensi",
@@ -108,7 +122,10 @@ const user = {
 			(item) => item.status === true
 		).length;
 		const totalKegiatan = dataAbsensi.length;
-		const persentaseKehadiran = ((totalKehadiran / totalKegiatan) * 100).toFixed(2);
+		const persentaseKehadiran = (
+			(totalKehadiran / totalKegiatan) *
+			100
+		).toFixed(2);
 		return {
 			status: "ok",
 			data: {
@@ -269,11 +286,11 @@ const user = {
 			.eq("nim", nim)
 			.single();
 		if (data.foto) {
-			const { error } = await supabase.storage
+			const { data: dataFoto, error } = await supabase.storage
 				.from("motion23_bucket")
 				.remove([`${data.kementerian.singkatan}/${data.nama}`]);
-			if (error) {
-				return { status: "err", msg: error };
+			if (error || dataFoto.length === 0) {
+				return { status: "err", msg: "Gagal menghapus foto!" };
 			}
 		}
 		const { error } = await supabase
@@ -294,14 +311,14 @@ const user = {
 		const user = data[0];
 
 		if (error || !user) {
-			return { status: "err", data: "Not admin" };
+			return { status: "err", data: { isAdmin: false } };
 		}
 
 		if (user.motion23_admin || user.id_kementerian === 2) {
 			return { status: "ok", data: { isAdmin: true } };
 		}
 
-		return { status: "err", data: "Not admin" };
+		return { status: "err", data: { isAdmin: false } };
 	},
 };
 
