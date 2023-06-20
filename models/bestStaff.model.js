@@ -5,7 +5,7 @@ const bestStaff = {
 		const { data, error } = await supabase
 			.from("motion23_bestStaff")
 			.select(
-				"month, staff:motion23_anggotaBEM(nim, nama, foto, kementerian:motion23_kementerian(*))"
+				"id, month, staff:motion23_anggotaBEM(nim, nama, foto, kementerian:motion23_kementerian(*))"
 			)
 			.order("month", { ascending: true })
 			.order("id_kementerian", { ascending: true });
@@ -18,7 +18,7 @@ const bestStaff = {
 		const { data, error } = await supabase
 			.from("motion23_bestStaff")
 			.select(
-				"month, staff:motion23_anggotaBEM(nim, nama, foto, kementerian:motion23_kementerian(*))"
+				"id, month, staff:motion23_anggotaBEM(nim, nama, foto, kementerian:motion23_kementerian(*))"
 			)
 			.eq("month", month)
 			.order("id_kementerian", { ascending: true });
