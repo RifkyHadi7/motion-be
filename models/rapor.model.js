@@ -6,14 +6,7 @@ const rapor = {
 			.select(
 				"*, user:motion23_anggotaBEM(nama, id_jabatan, id_kementerian, proker:motion23_proker(id_proker, proker), kementerian:motion23_kementerian(singkatan), jabatan:motion23_jabatan(jabatan)), detail:motion23_transparansi(catatan_transparansi, id_aspek, aspek:motion23_aspekPenilaian(aspek,indikator, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi)))"
 			)
-			.order("id_jabatan", {
-				foreignTable: "motion23_anggotaBEM",
-				ascending: true,
-			})
-			.order("id_kementerian", {
-				foreignTable: "motion23_anggotaBEM",
-				ascending: true,
-			});
+			.order("nim");
 		if (error) {
 			return { status: "err", msg: error };
 		}
