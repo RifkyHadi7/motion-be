@@ -4,9 +4,7 @@ const kegiatan = {
 	getAllKegiatan: async () => {
 		const { data, error } = await supabase
 			.from("motion23_kegiatan")
-			.select(
-				"*, kementerian:motion23_kementerian(kementerian, singkatan)"
-			)
+			.select("*, kementerian:motion23_kementerian(kementerian, singkatan)")
 			.order("id_kementerian", { ascending: true });
 		if (error) {
 			return { status: "err", msg: error };
@@ -16,9 +14,7 @@ const kegiatan = {
 	getKegiatanById: async (id) => {
 		const { data, error } = await supabase
 			.from("motion23_kegiatan")
-			.select(
-				"*, kementerian:motion23_kementerian(kementerian, singkatan)"
-			)
+			.select("*, kementerian:motion23_kementerian(kementerian, singkatan)")
 			.eq("id_kegiatan", id);
 		if (error) {
 			return { status: "err", msg: error };

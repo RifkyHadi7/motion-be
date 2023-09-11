@@ -58,6 +58,20 @@ const kementerian = {
 				error(res, err);
 			});
 	},
+	getKegiatanByIdKementerianRapor: async (req, res) => {
+		model
+			.getKegiatanByIdKementerianRapor(req.params)
+			.then((result) => {
+				if (result.status == "ok") {
+					success(res, result.data);
+				} else {
+					error(res, result.msg);
+				}
+			})
+			.catch((err) => {
+				error(res, err);
+			});
+	},
 };
 
 module.exports = kementerian;

@@ -86,12 +86,12 @@ const user = {
 			case 2:
 				tanggal = {
 					start: "2023-07-01",
-					end: "2023-08-31",
+					end: "2023-09-30",
 				};
 				break;
 			case 3:
 				tanggal = {
-					start: "2023-09-01",
+					start: "2023-10-01",
 					end: "2023-12-31",
 				};
 				break;

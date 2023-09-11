@@ -45,6 +45,46 @@ const kementerian = {
 		}
 		return { status: "ok", data };
 	},
+	getKegiatanByIdKementerianRapor: async ({ id, turn }) => {
+		//get count of kegiatan where tanggal between start and end
+		let tanggal = null;
+		switch (Number(turn)) {
+			case 1:
+				tanggal = {
+					start: "2023-01-01",
+					end: "2023-06-30",
+				};
+				break;
+			case 2:
+				tanggal = {
+					start: "2023-07-01",
+					end: "2023-09-30",
+				};
+				break;
+			case 3:
+				tanggal = {
+					start: "2023-10-01",
+					end: "2023-12-31",
+				};
+				break;
+			default:
+				tanggal = {
+					start: "2023-01-01",
+					end: "2023-12-31",
+				};
+		}
+		const { data, error } = await supabase
+			.from("motion23_kegiatan")
+			.select("id_kegiatan, kegiatan")
+			.eq("id_kementerian", id)
+			.gte("created_at", tanggal.start)
+			.lte("created_at", tanggal.end)
+			.order("id_kegiatan", { ascending: true });
+		if (error) {
+			return { status: "err", msg: error };
+		}
+		return { status: "ok", data };
+	},
 };
 
 module.exports = kementerian;
