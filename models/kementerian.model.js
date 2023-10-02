@@ -58,12 +58,12 @@ const kementerian = {
 			case 2:
 				tanggal = {
 					start: "2023-07-01",
-					end: "2023-09-30",
+					end: "2023-10-31",
 				};
 				break;
 			case 3:
 				tanggal = {
-					start: "2023-10-01",
+					start: "2023-11-01",
 					end: "2023-12-31",
 				};
 				break;
