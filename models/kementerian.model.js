@@ -52,33 +52,33 @@ const kementerian = {
 			case 1:
 				tanggal = {
 					start: "2023-01-01",
-					end: "2023-06-30",
+					end: "2023-06-22",
 				};
 				break;
 			case 2:
 				tanggal = {
-					start: "2023-07-01",
-					end: "2023-10-31",
+					start: "2023-06-23",
+					end: "2023-10-1",
 				};
 				break;
 			case 3:
 				tanggal = {
-					start: "2023-11-01",
-					end: "2023-12-31",
+					start: "2023-10-2",
+					end: "2024-01-31",
 				};
 				break;
 			default:
 				tanggal = {
 					start: "2023-01-01",
-					end: "2023-12-31",
+					end: "2024-01-31",
 				};
 		}
 		const { data, error } = await supabase
 			.from("motion23_kegiatan")
 			.select("id_kegiatan, kegiatan")
 			.eq("id_kementerian", id)
-			.gte("created_at", tanggal.start)
-			.lte("created_at", tanggal.end)
+			.gte("tanggal", tanggal.start)
+			.lte("tanggal", tanggal.end)
 			.order("id_kegiatan", { ascending: true });
 		if (error) {
 			return { status: "err", msg: error };
