@@ -4,9 +4,9 @@ const fetch = require("node-fetch");
 const user = {
 	getAllUser: async () => {
 		const { data, error } = await supabase
-			.from("motion23_anggotaBEM")
+			.from("motion24_anggotaBEM")
 			.select(
-				"nim, nama, foto, proker:motion23_proker(id_proker, proker), jabatan:motion23_jabatan(id_jabatan, jabatan), kementerian:motion23_kementerian(kementerian,singkatan, id_kementerian)"
+				"nim, nama, foto, proker:motion24_proker(id_proker, proker), jabatan:motion24_jabatan(id_jabatan, jabatan), kementerian:motion24_kementerian(kementerian,singkatan, id_kementerian)"
 			)
 			.order("id_jabatan", { ascending: true })
 			.order("id_kementerian", { ascending: true })
@@ -18,9 +18,9 @@ const user = {
 	},
 	getUserByNIM: async (nim) => {
 		const { data, error } = await supabase
-			.from("motion23_anggotaBEM")
+			.from("motion24_anggotaBEM")
 			.select(
-				"nim, nama, foto, proker:motion23_proker(id_proker, proker), jabatan:motion23_jabatan(id_jabatan, jabatan), kementerian:motion23_kementerian(kementerian,singkatan, id_kementerian)"
+				"nim, nama, foto, proker:motion24_proker(id_proker, proker), jabatan:motion24_jabatan(id_jabatan, jabatan), kementerian:motion24_kementerian(kementerian,singkatan, id_kementerian)"
 			)
 			.eq("nim", nim)
 			.single();
@@ -31,9 +31,9 @@ const user = {
 	},
 	getUserByKementerianJabatan: async ({ id_kementerian, id_jabatan }) => {
 		const { data, error } = await supabase
-			.from("motion23_anggotaBEM")
+			.from("motion24_anggotaBEM")
 			.select(
-				"nim, nama, foto, proker:motion23_proker(id_proker, proker), jabatan:motion23_jabatan(id_jabatan, jabatan), kementerian:motion23_kementerian(kementerian,singkatan, id_kementerian)"
+				"nim, nama, foto, proker:motion24_proker(id_proker, proker), jabatan:motion24_jabatan(id_jabatan, jabatan), kementerian:motion24_kementerian(kementerian,singkatan, id_kementerian)"
 			)
 			.eq("id_kementerian", id_kementerian)
 			.eq("id_jabatan", id_jabatan)
@@ -47,9 +47,9 @@ const user = {
 
 	getRaporByNim: async (nim) => {
 		const { data, error } = await supabase
-			.from("motion23_rapor")
+			.from("motion24_rapor")
 			.select(
-				"*, user:motion23_anggotaBEM(nama, foto, proker:motion23_proker(id_proker, proker), jabatan:motion23_jabatan(id_jabatan, jabatan), kementerian:motion23_kementerian(kementerian,singkatan, id_kementerian)) , detail:motion23_transparansi(catatan_transparansi,id_aspek, aspek:motion23_aspekPenilaian(aspek,indikator, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi)))"
+				"*, user:motion24_anggotaBEM(nama, foto, proker:motion24_proker(id_proker, proker), jabatan:motion24_jabatan(id_jabatan, jabatan), kementerian:motion24_kementerian(kementerian,singkatan, id_kementerian)) , detail:motion24_transparansi(catatan_transparansi,id_aspek, aspek:motion24_aspekPenilaian(aspek,indikator, sub_aspek:motion24_detailAspek(sub_aspek, deskripsi)))"
 			)
 			.eq("nim", nim)
 			.order("id_rapor", { ascending: true });
@@ -60,9 +60,9 @@ const user = {
 	},
 	getRaporByTurnNim: async ({ nim, turn }) => {
 		const { data, error } = await supabase
-			.from("motion23_rapor")
+			.from("motion24_rapor")
 			.select(
-				"*, user:motion23_anggotaBEM(nama, foto, proker:motion23_proker(id_proker, proker), jabatan:motion23_jabatan(id_jabatan, jabatan), kementerian:motion23_kementerian(kementerian,singkatan, id_kementerian)) , detail:motion23_transparansi(catatan_transparansi,id_aspek, aspek:motion23_aspekPenilaian(aspek,indikator, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi)))"
+				"*, user:motion24_anggotaBEM(nama, foto, proker:motion24_proker(id_proker, proker), jabatan:motion24_jabatan(id_jabatan, jabatan), kementerian:motion24_kementerian(kementerian,singkatan, id_kementerian)) , detail:motion24_transparansi(catatan_transparansi,id_aspek, aspek:motion24_aspekPenilaian(aspek,indikator, sub_aspek:motion24_detailAspek(sub_aspek, deskripsi)))"
 			)
 			.eq("nim", nim)
 			.eq("rapor_ke", turn)
@@ -102,15 +102,15 @@ const user = {
 				};
 		}
 		const { data, error } = await supabase
-			.from("motion23_anggotaBEM")
+			.from("motion24_anggotaBEM")
 			.select(
-				"absensi:motion23_absensi(id_kegiatan,status, kegiatan:motion23_kegiatan(kegiatan, tanggal, created_at))"
+				"absensi:motion24_absensi(id_kegiatan,status, kegiatan:motion24_kegiatan(kegiatan, tanggal, created_at))"
 			)
 			.eq("nim", nim)
 			.gte("absensi.kegiatan.tanggal", tanggal.start)
 			.lte("absensi.kegiatan.tanggal", tanggal.end)
 			.order("id_kegiatan", {
-				foreignTable: "motion23_absensi",
+				foreignTable: "motion24_absensi",
 				ascending: true,
 			})
 			.single();
@@ -157,9 +157,9 @@ const user = {
 				return { status: "err", msg: login.message };
 			}
 			const { data, err } = await supabase
-				.from("motion23_anggotaBEM")
+				.from("motion24_anggotaBEM")
 				.select(
-					"nim,nama, proker:motion23_proker(id_proker, proker), jabatan:motion23_jabatan(jabatan, id_jabatan), kementerian:motion23_kementerian(kementerian,singkatan, id_kementerian)"
+					"nim,nama, proker:motion24_proker(id_proker, proker), jabatan:motion24_jabatan(jabatan, id_jabatan), kementerian:motion24_kementerian(kementerian,singkatan, id_kementerian)"
 				)
 				.eq("nim", nim)
 				.single();
@@ -192,7 +192,7 @@ const user = {
 			const {
 				data: { singkatan },
 			} = await supabase
-				.from("motion23_kementerian")
+				.from("motion24_kementerian")
 				.select("singkatan")
 				.eq("id_kementerian", id_kementerian)
 				.single();
@@ -205,11 +205,11 @@ const user = {
 					data: { publicUrl },
 				},
 			] = await Promise.all([
-				supabase.storage.from("motion23_bucket").upload(pathname, file.buffer, {
+				supabase.storage.from("motion24_bucket").upload(pathname, file.buffer, {
 					cacheControl: "3600",
 					contentType: file.mimetype,
 				}),
-				supabase.storage.from("motion23_bucket").getPublicUrl(pathname),
+				supabase.storage.from("motion24_bucket").getPublicUrl(pathname),
 			]);
 
 			if (errUpload) {
@@ -219,13 +219,13 @@ const user = {
 			data.foto = publicUrl;
 		}
 
-		const { error } = await supabase.from("motion23_anggotaBEM").insert(data);
+		const { error } = await supabase.from("motion24_anggotaBEM").insert(data);
 		if (error) {
 			return { status: "err", msg: error };
 		}
 		if (id_proker) {
 			prokerData = id_proker.split(",").map(Number);
-			const { error } = await supabase.from("motion23_pjProker").insert(
+			const { error } = await supabase.from("motion24_pjProker").insert(
 				prokerData.map((id) => ({
 					nim: data.nim,
 					id_proker: id,
@@ -242,7 +242,7 @@ const user = {
 		delete data.id_proker;
 		console.log(nim);
 		const { error } = await supabase
-			.from("motion23_anggotaBEM")
+			.from("motion24_anggotaBEM")
 			.update(data)
 			.eq("nim", nim);
 		if (error) {
@@ -250,12 +250,12 @@ const user = {
 		}
 		if (id_proker) {
 			const { data } = await supabase
-				.from("motion23_pjProker")
+				.from("motion24_pjProker")
 				.select("*")
 				.eq("nim", nim);
 			if (data.length > 0) {
 				const { error } = await supabase
-					.from("motion23_pjProker")
+					.from("motion24_pjProker")
 					.delete()
 					.eq("nim", nim);
 				if (error) {
@@ -264,7 +264,7 @@ const user = {
 			}
 
 			const { error } = await supabase
-				.from("motion23_pjProker")
+				.from("motion24_pjProker")
 				.upsert(
 					id_proker.map((id) => ({
 						nim,
@@ -281,20 +281,20 @@ const user = {
 	deleteUser: async ({ nim }) => {
 		//delete storage
 		const { data } = await supabase
-			.from("motion23_anggotaBEM")
-			.select("kementerian:motion23_kementerian(singkatan), nama, foto")
+			.from("motion24_anggotaBEM")
+			.select("kementerian:motion24_kementerian(singkatan), nama, foto")
 			.eq("nim", nim)
 			.single();
 		if (data.foto) {
 			const { data: dataFoto, error } = await supabase.storage
-				.from("motion23_bucket")
+				.from("motion24_bucket")
 				.remove([`${data.kementerian.singkatan}/${data.nama}`]);
 			if (error || dataFoto.length === 0) {
 				return { status: "err", msg: "Gagal menghapus foto!" };
 			}
 		}
 		const { error } = await supabase
-			.from("motion23_anggotaBEM")
+			.from("motion24_anggotaBEM")
 			.delete()
 			.eq("nim", nim);
 		if (error) {
@@ -304,8 +304,8 @@ const user = {
 	},
 	isAdmin: async ({ nim }) => {
 		const { data, error } = await supabase
-			.from("motion23_anggotaBEM")
-			.select("id_kementerian, motion23_admin(nim)")
+			.from("motion24_anggotaBEM")
+			.select("id_kementerian, motion24_admin(nim)")
 			.eq("nim", `${nim}`);
 
 		const user = data[0];
@@ -314,7 +314,7 @@ const user = {
 			return { status: "err", data: { isAdmin: false } };
 		}
 
-		if (user.motion23_admin || user.id_kementerian === 2) {
+		if (user.motion24_admin || user.id_kementerian === 2) {
 			return { status: "ok", data: { isAdmin: true } };
 		}
 

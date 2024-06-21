@@ -4,9 +4,9 @@ const supabase = require("../constants/config");
 const aspek = {
 	getAllAspek: async () => {
 		const { data, error } = await supabase
-			.from("motion23_aspekPenilaian")
+			.from("motion24_aspekPenilaian")
 			.select(
-				"*, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi), jabatan:motion23_jabatan(jabatan)"
+				"*, sub_aspek:motion24_detailAspek(sub_aspek, deskripsi), jabatan:motion24_jabatan(jabatan)"
 			)
 			.order("id_aspek", { ascending: true });
 		if (error) {
@@ -16,9 +16,9 @@ const aspek = {
 	},
 	getAspekById: async (id) => {
 		const { data, error } = await supabase
-			.from("motion23_aspekPenilaian")
+			.from("motion24_aspekPenilaian")
 			.select(
-				"*, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi), jabatan:motion23_jabatan(jabatan)"
+				"*, sub_aspek:motion24_detailAspek(sub_aspek, deskripsi), jabatan:motion24_jabatan(jabatan)"
 			)
 			.eq("id_aspek", id)
 			.order("id_aspek", { ascending: true });
@@ -51,7 +51,7 @@ const aspek = {
 		}
 	},
 	addAspek: async (data) => {
-		const { error } = await supabase.from("motion23_aspek").insert(data);
+		const { error } = await supabase.from("motion24_aspek").insert(data);
 		if (error) {
 			return { status: "err", msg: error };
 		}
@@ -59,7 +59,7 @@ const aspek = {
 	},
 	updateAspek: async (data, { id }) => {
 		const { error } = await supabase
-			.from("motion23_aspek")
+			.from("motion24_aspek")
 			.update(data)
 			.eq("id_aspek", id);
 		if (error) {
@@ -69,7 +69,7 @@ const aspek = {
 	},
 	deleteAspek: async ({ id }) => {
 		const { error } = await supabase
-			.from("motion23_aspek")
+			.from("motion24_aspek")
 			.delete()
 			.eq("id_aspek", id);
 		if (error) {

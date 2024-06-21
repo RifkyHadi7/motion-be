@@ -2,9 +2,9 @@ const supabase = require("../constants/config");
 const rapor = {
 	getAllRapor: async () => {
 		const { data, error } = await supabase
-			.from("motion23_rapor")
+			.from("motion24_rapor")
 			.select(
-				"*, user:motion23_anggotaBEM(nama, id_jabatan, id_kementerian, proker:motion23_proker(id_proker, proker), kementerian:motion23_kementerian(singkatan), jabatan:motion23_jabatan(jabatan)), detail:motion23_transparansi(catatan_transparansi, id_aspek, aspek:motion23_aspekPenilaian(aspek,indikator, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi)))"
+				"*, user:motion24_anggotaBEM(nama, id_jabatan, id_kementerian, proker:motion24_proker(id_proker, proker), kementerian:motion24_kementerian(singkatan), jabatan:motion24_jabatan(jabatan)), detail:motion24_transparansi(catatan_transparansi, id_aspek, aspek:motion24_aspekPenilaian(aspek,indikator, sub_aspek:motion24_detailAspek(sub_aspek, deskripsi)))"
 			)
 			.order("nim");
 		if (error) {
@@ -15,7 +15,7 @@ const rapor = {
 	addRapor: async (data) => {
 		const { kehadiran, detail_rapor } = data;
 		const { data: id_rapor, error: errRapor } = await supabase
-			.from("motion23_rapor")
+			.from("motion24_rapor")
 			.insert({
 				rapor_ke: data.rapor_ke,
 				hobi: data.hobi,
@@ -38,7 +38,7 @@ const rapor = {
 				});
 			});
 			const { error: errKehadiran } = await supabase
-				.from("motion23_absensi")
+				.from("motion24_absensi")
 				.upsert(dataKehadiran);
 			if (errKehadiran) {
 				return { status: "err", msg: errKehadiran };
@@ -54,7 +54,7 @@ const rapor = {
 				});
 			});
 			const { error: errDetailRapor } = await supabase
-				.from("motion23_transparansi")
+				.from("motion24_transparansi")
 				.upsert(dataDetailRapor);
 			if (errDetailRapor) {
 				return { status: "err", msg: errDetailRapor };
@@ -65,7 +65,7 @@ const rapor = {
 	editRapor: async ({ id }, data) => {
 		const { kehadiran, detail_rapor } = data;
 		const { error: errRapor } = await supabase
-			.from("motion23_rapor")
+			.from("motion24_rapor")
 			.update({
 				rapor_ke: data.rapor_ke,
 				hobi: data.hobi,
@@ -81,7 +81,7 @@ const rapor = {
 		}
 		if (kehadiran) {
 			const { error: errDeleteKehadiran } = await supabase
-				.from("motion23_absensi")
+				.from("motion24_absensi")
 				.delete()
 				.eq("nim", data.nim);
 			if (errDeleteKehadiran) {
@@ -99,7 +99,7 @@ const rapor = {
 				});
 			});
 			const { error: errKehadiran } = await supabase
-				.from("motion23_absensi")
+				.from("motion24_absensi")
 				.upsert(dataKehadiran);
 			if (errKehadiran) {
 				console.log("errKehadiran", errKehadiran);
@@ -108,7 +108,7 @@ const rapor = {
 		}
 		if (detail_rapor) {
 			const { error: errDeleteTransparansi } = await supabase
-				.from("motion23_transparansi")
+				.from("motion24_transparansi")
 				.delete()
 				.eq("id_rapor", id);
 			if (errDeleteTransparansi) {
@@ -124,7 +124,7 @@ const rapor = {
 				});
 			});
 			const { error: errDetailRapor } = await supabase
-				.from("motion23_transparansi")
+				.from("motion24_transparansi")
 				.upsert(dataDetailRapor);
 			if (errDetailRapor) {
 				console.log("errDetailRapor", errDetailRapor);
@@ -135,7 +135,7 @@ const rapor = {
 	},
 	deleteRapor: async ({ id }) => {
 		const { error } = await Promise.all([
-			supabase.from("motion23_rapor").delete().match({ id_rapor: id }),
+			supabase.from("motion24_rapor").delete().match({ id_rapor: id }),
 		]);
 		if (error) {
 			return { status: "err", msg: error };

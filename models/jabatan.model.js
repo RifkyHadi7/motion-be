@@ -3,7 +3,7 @@ const supabase = require("../constants/config");
 const jabatan = {
 	getAllJabatan: async () => {
 		const { data, error } = await supabase
-			.from("motion23_jabatan")
+			.from("motion24_jabatan")
 			.select("*")
 			.order("id_jabatan", { ascending: true });
 		if (error) {
@@ -13,7 +13,7 @@ const jabatan = {
 	},
 	getJabatanById: async (id) => {
 		const { data, error } = await supabase
-			.from("motion23_jabatan")
+			.from("motion24_jabatan")
 			.select("*")
 			.eq("id_jabatan", id);
 		if (error) {
@@ -23,9 +23,9 @@ const jabatan = {
 	},
 	getUserByIdJabatan: async (id) => {
 		const { data, error } = await supabase
-			.from("motion23_anggotaBEM")
+			.from("motion24_anggotaBEM")
 			.select(
-				"nim, nama, foto, jabatan:motion23_jabatan(id_jabatan, jabatan), proker:motion23_proker(id_proker, proker), kementerian:motion23_kementerian(kementerian,singkatan, id_kementerian)"
+				"nim, nama, foto, jabatan:motion24_jabatan(id_jabatan, jabatan), proker:motion24_proker(id_proker, proker), kementerian:motion24_kementerian(kementerian,singkatan, id_kementerian)"
 			)
 			.eq("id_jabatan", id);
 		if (error) {
@@ -35,8 +35,8 @@ const jabatan = {
 	},
 	getAspekByIdJabatan: async (id) => {
 		const { data, error } = await supabase
-			.from("motion23_aspekPenilaian")
-			.select("*, sub_aspek:motion23_detailAspek(sub_aspek, deskripsi)")
+			.from("motion24_aspekPenilaian")
+			.select("*, sub_aspek:motion24_detailAspek(sub_aspek, deskripsi)")
 			.eq("id_jabatan", id)
 			.order("id_aspek", { ascending: true });
 		if (error) {

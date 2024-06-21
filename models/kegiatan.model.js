@@ -3,8 +3,8 @@ const supabase = require("../constants/config");
 const kegiatan = {
 	getAllKegiatan: async () => {
 		const { data, error } = await supabase
-			.from("motion23_kegiatan")
-			.select("*, kementerian:motion23_kementerian(kementerian, singkatan)")
+			.from("motion24_kegiatan")
+			.select("*, kementerian:motion24_kementerian(kementerian, singkatan)")
 			.order("id_kementerian", { ascending: true });
 		if (error) {
 			return { status: "err", msg: error };
@@ -13,8 +13,8 @@ const kegiatan = {
 	},
 	getKegiatanById: async (id) => {
 		const { data, error } = await supabase
-			.from("motion23_kegiatan")
-			.select("*, kementerian:motion23_kementerian(kementerian, singkatan)")
+			.from("motion24_kegiatan")
+			.select("*, kementerian:motion24_kementerian(kementerian, singkatan)")
 			.eq("id_kegiatan", id);
 		if (error) {
 			return { status: "err", msg: error };
@@ -22,7 +22,7 @@ const kegiatan = {
 		return { status: "ok", data };
 	},
 	addKegiatan: async (data) => {
-		const { error } = await supabase.from("motion23_kegiatan").insert(data);
+		const { error } = await supabase.from("motion24_kegiatan").insert(data);
 		if (error) {
 			return { status: "err", msg: error };
 		}
@@ -30,7 +30,7 @@ const kegiatan = {
 	},
 	updateKegiatan: async (id, data) => {
 		const { error } = await supabase
-			.from("motion23_kegiatan")
+			.from("motion24_kegiatan")
 			.update(data)
 			.eq("id_kegiatan", id);
 		if (error) {
@@ -40,7 +40,7 @@ const kegiatan = {
 	},
 	deleteKegiatan: async (id) => {
 		const { error } = await supabase
-			.from("motion23_kegiatan")
+			.from("motion24_kegiatan")
 			.delete()
 			.eq("id_kegiatan", id);
 		if (error) {

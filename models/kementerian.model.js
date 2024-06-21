@@ -3,9 +3,9 @@ const supabase = require("../constants/config");
 const kementerian = {
 	getAllKementerian: async () => {
 		const { data, error } = await supabase
-			.from("motion23_kementerian")
+			.from("motion24_kementerian")
 			.select(
-				"id_kementerian, kementerian, singkatan, proker:motion23_proker(id_proker, proker)"
+				"id_kementerian, kementerian, singkatan, proker:motion24_proker(id_proker, proker)"
 			)
 			.order("id_kementerian", { ascending: true });
 		if (error) {
@@ -15,9 +15,9 @@ const kementerian = {
 	},
 	getKementerianById: async (id) => {
 		const { data, error } = await supabase
-			.from("motion23_kementerian")
+			.from("motion24_kementerian")
 			.select(
-				"id_kementerian, kementerian, singkatan, proker:motion23_proker(id_proker, proker)"
+				"id_kementerian, kementerian, singkatan, proker:motion24_proker(id_proker, proker)"
 			)
 			.eq("id_kementerian", id);
 		if (error) {
@@ -27,7 +27,7 @@ const kementerian = {
 	},
 	getKegiatanByIdKementerian: async (id) => {
 		const { data, error } = await supabase
-			.from("motion23_kegiatan")
+			.from("motion24_kegiatan")
 			.select("id_kegiatan, kegiatan")
 			.eq("id_kementerian", id);
 		if (error) {
@@ -37,7 +37,7 @@ const kementerian = {
 	},
 	getProkerByIdKementerian: async (id) => {
 		const { data, error } = await supabase
-			.from("motion23_proker")
+			.from("motion24_proker")
 			.select("id_proker, proker")
 			.eq("id_kementerian", id);
 		if (error) {
@@ -51,30 +51,30 @@ const kementerian = {
 		switch (Number(turn)) {
 			case 1:
 				tanggal = {
-					start: "2023-01-01",
-					end: "2023-06-22",
+					start: "2024-01-01",
+					end: "2024-06-22",
 				};
 				break;
 			case 2:
 				tanggal = {
-					start: "2023-06-23",
-					end: "2023-09-20",
+					start: "2024-06-23",
+					end: "2024-09-20",
 				};
 				break;
 			case 3:
 				tanggal = {
-					start: "2023-09-21",
-					end: "2024-01-31",
+					start: "2024-09-21",
+					end: "2025-01-31",
 				};
 				break;
 			default:
 				tanggal = {
-					start: "2023-01-01",
-					end: "2024-01-31",
+					start: "2024-01-01",
+					end: "2025-01-31",
 				};
 		}
 		const { data, error } = await supabase
-			.from("motion23_kegiatan")
+			.from("motion24_kegiatan")
 			.select("id_kegiatan, kegiatan")
 			.eq("id_kementerian", id)
 			.gte("tanggal", tanggal.start)

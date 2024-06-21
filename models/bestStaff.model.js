@@ -3,9 +3,9 @@ const supabase = require("../constants/config");
 const bestStaff = {
 	getAllBestStaff: async () => {
 		const { data, error } = await supabase
-			.from("motion23_bestStaff")
+			.from("motion24_bestStaff")
 			.select(
-				"id, month, nim, id_kementerian, staff:motion23_anggotaBEM(nim, nama, foto, kementerian:motion23_kementerian(*))"
+				"id, month, nim, id_kementerian, staff:motion24_anggotaBEM(nim, nama, foto, kementerian:motion24_kementerian(*))"
 			)
 			.order("month", { ascending: true })
 			.order("id_kementerian", { ascending: true });
@@ -16,9 +16,9 @@ const bestStaff = {
 	},
 	getBestStaffByMonth: async ({ month }) => {
 		const { data, error } = await supabase
-			.from("motion23_bestStaff")
+			.from("motion24_bestStaff")
 			.select(
-				"id, month, nim, id_kementerian, staff:motion23_anggotaBEM(nim, nama, foto, kementerian:motion23_kementerian(*))"
+				"id, month, nim, id_kementerian, staff:motion24_anggotaBEM(nim, nama, foto, kementerian:motion24_kementerian(*))"
 			)
 			.eq("month", month)
 			.order("id_kementerian", { ascending: true });
@@ -30,7 +30,7 @@ const bestStaff = {
 
 	addBestStaff: async (data) => {
 		const { error } = await supabase
-			.from("motion23_bestStaff")
+			.from("motion24_bestStaff")
 			.insert(data);
 		if (error) {
 			return { status: "err", msg: error };
@@ -39,7 +39,7 @@ const bestStaff = {
 	},
 	updateBestStaff: async (data, { id }) => {
 		const { error } = await supabase
-			.from("motion23_bestStaff")
+			.from("motion24_bestStaff")
 			.update(data)
 			.eq("id", id);
 		if (error) {
@@ -49,7 +49,7 @@ const bestStaff = {
 	},
 	deleteBestStaff: async ({ id }) => {
 		const { error } = await supabase
-			.from("motion23_bestStaff")
+			.from("motion24_bestStaff")
 			.delete()
 			.eq("id", id);
 		if (error) {
