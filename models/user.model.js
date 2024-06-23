@@ -205,11 +205,11 @@ const user = {
 					data: { publicUrl },
 				},
 			] = await Promise.all([
-				supabase.storage.from("motion23_bucket").upload(pathname, file.buffer, {
+				supabase.storage.from("motion24_bucket").upload(pathname, file.buffer, {
 					cacheControl: "3600",
 					contentType: file.mimetype,
 				}),
-				supabase.storage.from("motion23_bucket").getPublicUrl(pathname),
+				supabase.storage.from("motion24_bucket").getPublicUrl(pathname),
 			]);
 
 			if (errUpload) {
