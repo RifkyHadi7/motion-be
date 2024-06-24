@@ -4,7 +4,7 @@ const rapor = {
 		const { data, error } = await supabase
 			.from("motion24_rapor")
 			.select(
-				"*, user:motion24_anggotaBEM(nama, id_jabatan, id_kementerian, proker:motion24_proker(id_proker, proker), kementerian:motion24_kementerian(singkatan), jabatan:motion24_jabatan(jabatan)), detail:motion24_transparansi(catatan_transparansi, id_aspek, aspek:motion24_aspekPenilaian(aspek,indikator, sub_aspek:motion24_detailAspek(sub_aspek, deskripsi)))"
+				"*, user:motion24_anggotaBEM(nama, id_jabatan, id_kementerian, proker:motion24_proker(id_proker, proker), kementerian:motion24_kementerian(singkatan), jabatan:motion24_jabatan(jabatan)), detail:motion24_transparansi(catatan_transparansi, id_aspek, aspek:motion24_aspekPenilaian(aspek,indikator, sub_aspek:motion24_detailAspek(sub_aspek, deskripsi, nilai:motion24_nilai(nilai))))"
 			)
 			.order("nim");
 		if (error) {
@@ -60,6 +60,23 @@ const rapor = {
 				return { status: "err", msg: errDetailRapor };
 			}
 		}
+		if (nilai) {
+			let dataNilai = [];
+			nilai.forEach((item) => {
+				dataNilai.push({
+					id_rapor: id_rapor[0].id_rapor,
+					id_subaspek: item.id_subaspek,
+					nilai: item.nilai,
+				});
+			});
+			const { error: errNilai } = await supabase
+				.from("motion24_nilai")
+				.upsert(dataNilai);
+			if (errNilai) {
+				return { status: "err", msg: errNilai };
+			}
+		}
+		
 		return { status: "ok", msg: "success add rapor" };
 	},
 	editRapor: async ({ id }, data) => {
@@ -129,6 +146,31 @@ const rapor = {
 			if (errDetailRapor) {
 				console.log("errDetailRapor", errDetailRapor);
 				return { status: "err", msg: errDetailRapor };
+			}
+		}
+		if (nilai) {
+			const { error: errDeleteNilai } = await supabase
+				.from("motion24_nilai")
+				.delete()
+				.eq("id_rapor", id);
+			if (errDeleteNilai) {
+				console.log("errDeleteNilai", errDeleteNilai);
+				return { status: "err", msg: errDeleteNilai };
+			}
+			let dataNilai = [];
+			nilai.forEach((item) => {
+				dataNilai.push({
+					id_rapor: id_rapor[0].id_rapor,
+					id_subaspek: item.id_subaspek,
+					nilai: item.nilai,
+				});
+			});
+			const { error: errNilai } = await supabase
+				.from("motion24_nilai")
+				.upsert(dataNilai);
+			if (errNilai) {
+				console.log("errNilai", errNilai);
+				return { status: "err", msg: errNilai };
 			}
 		}
 		return { status: "ok", msg: "success edit rapor" };
