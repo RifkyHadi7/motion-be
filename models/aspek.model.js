@@ -6,7 +6,7 @@ const aspek = {
 		const { data, error } = await supabase
 			.from("motion24_aspekPenilaian")
 			.select(
-				"*, sub_aspek:motion24_detailAspek(id_subaspek, sub_aspek), jabatan:motion24_jabatan(jabatan)"
+				"*, sub_aspek:motion24_detailAspek(id_subaspek, sub_aspek, deskripsi), jabatan:motion24_jabatan(jabatan)"
 			)
 			.order("id_aspek", { ascending: true });
 		if (error) {
