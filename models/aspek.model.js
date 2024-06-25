@@ -6,7 +6,7 @@ const aspek = {
 		const { data, error } = await supabase
 			.from("motion24_aspekPenilaian")
 			.select(
-				"*, sub_aspek:motion24_detailAspek(id, sub_aspek, deskripsi), jabatan:motion24_jabatan(jabatan)"
+				"*, sub_aspek:motion24_detailAspek(*), jabatan:motion24_jabatan(jabatan)"
 			)
 			.order("id_aspek", { ascending: true });
 		if (error) {
@@ -18,7 +18,7 @@ const aspek = {
 		const { data, error } = await supabase
 			.from("motion24_aspekPenilaian")
 			.select(
-				"*, sub_aspek:motion24_detailAspek(id, sub_aspek, deskripsi), jabatan:motion24_jabatan(jabatan)"
+				"*, sub_aspek:motion24_detailAspek(*), jabatan:motion24_jabatan(jabatan)"
 			)
 			.eq("id_aspek", id)
 			.order("id_aspek", { ascending: true });
