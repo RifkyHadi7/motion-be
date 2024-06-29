@@ -13,7 +13,7 @@ const rapor = {
 		return { status: "ok", data };
 	},
 	addRapor: async (data) => {
-		const { kehadiran, detail_rapor } = data;
+		const { kehadiran, detail_rapor, nilai } = data;
 		const { data: id_rapor, error: errRapor } = await supabase
 			.from("motion24_rapor")
 			.insert({
