@@ -20,7 +20,7 @@ const rapor = {
 				rapor_ke: data.rapor_ke,
 				hobi: data.hobi,
 				kesimpulan_diri: data.kesimpulan_diri,
-				kesimpulan_lain: data.kesimpulan_lain,
+				kesimpulan_orang: data.kesimpulan_orang,
 				motivasi: data.motivasi,
 				nim: data.nim,
 			})
