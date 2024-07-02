@@ -80,14 +80,14 @@ const rapor = {
 		return { status: "ok", msg: "success add rapor" };
 	},
 	editRapor: async ({ id }, data) => {
-		const { kehadiran, detail_rapor } = data;
+		const { kehadiran, detail_rapor, nilai } = data;
 		const { error: errRapor } = await supabase
 			.from("motion24_rapor")
 			.update({
 				rapor_ke: data.rapor_ke,
 				hobi: data.hobi,
 				kesimpulan_diri: data.kesimpulan_diri,
-				kesimpulan_lain: data.kesimpulan_lain,
+				kesimpulan_orang: data.kesimpulan_orang,
 				motivasi: data.motivasi,
 				nim: data.nim,
 			})
