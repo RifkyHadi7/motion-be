@@ -49,7 +49,7 @@ const user = {
 		const { data, error } = await supabase
 			.from("motion24_rapor")
 			.select(
-				"*, user:motion24_anggotaBEM(nama, foto, proker:motion24_proker(id_proker, proker), jabatan:motion24_jabatan(id_jabatan, jabatan), kementerian:motion24_kementerian(kementerian,singkatan, id_kementerian)) , detail:motion24_transparansi(catatan_transparansi,id_aspek, aspek:motion24_aspekPenilaian(aspek,indikator, sub_aspek:motion24_detailAspek(sub_aspek, deskripsi)))"
+				"*, user:motion24_anggotaBEM(nama, foto, proker:motion24_proker(id_proker, proker), jabatan:motion24_jabatan(id_jabatan, jabatan), kementerian:motion24_kementerian(kementerian,singkatan, id_kementerian)) , detail:motion24_transparansi(catatan_transparansi,id_aspek, aspek:motion24_aspekPenilaian(aspek,indikator, sub_aspek:motion24_detailAspek(sub_aspek, deskripsi, nilai:motion24_nilai(nilai))))"
 			)
 			.eq("nim", nim)
 			.order("id_rapor", { ascending: true });
@@ -62,7 +62,7 @@ const user = {
 		const { data, error } = await supabase
 			.from("motion24_rapor")
 			.select(
-				"*, user:motion24_anggotaBEM(nama, foto, proker:motion24_proker(id_proker, proker), jabatan:motion24_jabatan(id_jabatan, jabatan), kementerian:motion24_kementerian(kementerian,singkatan, id_kementerian)) , detail:motion24_transparansi(catatan_transparansi,id_aspek, aspek:motion24_aspekPenilaian(aspek,indikator, sub_aspek:motion24_detailAspek(sub_aspek, deskripsi)))"
+				"*, user:motion24_anggotaBEM(nama, foto, proker:motion24_proker(id_proker, proker), jabatan:motion24_jabatan(id_jabatan, jabatan), kementerian:motion24_kementerian(kementerian,singkatan, id_kementerian)) , detail:motion24_transparansi(catatan_transparansi,id_aspek, aspek:motion24_aspekPenilaian(aspek,indikator, sub_aspek:motion24_detailAspek(sub_aspek, deskripsi, nilai:motion24_nilai(nilai))))"
 			)
 			.eq("nim", nim)
 			.eq("rapor_ke", turn)
