@@ -301,7 +301,7 @@ const user = {
 			.single();
 		if (data.foto) {
 			const { data: dataFoto, error } = await supabase.storage
-				.from("motion23_bucket")
+				.from("motion24_bucket")
 				.remove([`${data.kementerian.singkatan}/${data.nama}`]);
 			if (error || dataFoto.length === 0) {
 				return { status: "err", msg: "Gagal menghapus foto!" };
