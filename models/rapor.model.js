@@ -4,7 +4,7 @@ const rapor = {
 		const { data, error } = await supabase
 			.from("motion24_rapor")
 			.select(
-				"*, user:motion24_anggotaBEM(nama, id_jabatan, id_kementerian, proker:motion24_proker(id_proker, proker), kementerian:motion24_kementerian(singkatan), jabatan:motion24_jabatan(jabatan)), detail:motion24_transparansi(catatan_transparansi, id_aspek, aspek:motion24_aspekPenilaian(aspek,indikator, sub_aspek:motion24_detailAspek(sub_aspek, deskripsi, nilai:motion24_nilai(nilai))))"
+				"*, user:motion24_anggotaBEM(nama, id_jabatan, id_kementerian, proker:motion24_proker(id_proker, proker), kementerian:motion24_kementerian(singkatan), jabatan:motion24_jabatan(jabatan))"
 			)
 			.order("nim");
 		if (error) {
