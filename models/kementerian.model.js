@@ -51,26 +51,26 @@ const kementerian = {
 		switch (Number(turn)) {
 			case 1:
 				tanggal = {
-					start: "2024-01-01",
-					end: "2024-06-22",
+					start: "2025-03-01",
+					end: "2025-05-31",
 				};
 				break;
 			case 2:
 				tanggal = {
-					start: "2024-06-23",
-					end: "2024-09-20",
+					start: "2025-06-1",
+					end: "2025-08-31",
 				};
 				break;
 			case 3:
 				tanggal = {
-					start: "2024-09-21",
-					end: "2025-01-31",
+					start: "2025-09-1",
+					end: "2025-11-30",
 				};
 				break;
 			default:
 				tanggal = {
-					start: "2024-01-01",
-					end: "2025-01-31",
+					start: "2025-01-01",
+					end: "2025-12-31",
 				};
 		}
 		const { data, error } = await supabase
