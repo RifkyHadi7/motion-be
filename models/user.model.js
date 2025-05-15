@@ -153,7 +153,7 @@ const user = {
 	},
 	login: async ({ nim, password }) => {
 		try {
-			const login = await fetch(`https://bemfilkom-rest.vercel.app/auth`, {
+			const login = await fetch(`https://bemfilkom.ddns.net:8443/`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -167,7 +167,7 @@ const user = {
 				.catch((err) => {
 					throw err;
 				});
-			if (!login.success) {
+			if (!reply.message === "successfully logged in") {
 				return { status: "err", msg: login.message };
 			}
 			const { data, err } = await supabase
