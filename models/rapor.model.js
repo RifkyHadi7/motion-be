@@ -20,7 +20,7 @@ const rapor = {
 				rapor_ke: data.rapor_ke,
 				hobi: data.hobi,
 				kesimpulan_diri: data.kesimpulan_diri,
-				kesimpulan_orang: data.kesimpulan_orang,
+				keterangan_absen: data.keterangan_absen,
 				motivasi: data.motivasi,
 				nim: data.nim,
 			})
@@ -87,7 +87,7 @@ const rapor = {
 				rapor_ke: data.rapor_ke,
 				hobi: data.hobi,
 				kesimpulan_diri: data.kesimpulan_diri,
-				kesimpulan_orang: data.kesimpulan_orang,
+				keterangan_absen: data.keterangan_absen,
 				motivasi: data.motivasi,
 				nim: data.nim,
 			})
