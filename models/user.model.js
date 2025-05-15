@@ -167,7 +167,7 @@ const user = {
 				.catch((err) => {
 					throw err;
 				});
-			if (!reply.message === "successfully logged in") {
+			if (!login.message === "successfully logged in") {
 				return { status: "err", msg: login.message };
 			}
 			const { data, err } = await supabase
